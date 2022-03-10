@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.css" />
+    <link rel="stylesheet" href="/css/bootstrap-grid.css" />
+    <title>Tracker Dashboard</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #104161;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Quantified Self App</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a href="/user/{{username}}/home" class="nav-link">Home</a>
+              <a class="nav-link active" aria-current="page" href="/trackers">Trackers Dashboard</a>
+              <a class="nav-link" aria-current="page" href="/trackers/create">Create A Tracker</a>
+            </div>
+          </div>
+          <a class="btn btn-danger" role="button" href="/user/logout" >Logout</a>
+        </div>
+    </nav>
+
+    <div class="containe-sm" style="padding: 30px">
+        <div class="row">
+            <h1 class="display-3">Trackers Editor</h1>
+            <div class="col-md justify-content-center" style="border: 1px solid #10222E; border-radius: 5px; padding: 10px;">
+                <div class="table-responsive">
+                    <table class="table table-sm table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Tracker Name</th>
+                                <th scope="col">Tracker Type</th>
+                                <th scope="col">Tracker Description</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tracker in trackers %}
+                            <tr>
+                                <td scope="row">{{loop.index}}</td>
+                                <td>{{tracker.tracker_name}}</td>
+                                <td>{{tracker.tracker_type}}</td>
+                                <td>{{tracker.tracker_desc}}</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #104161; color: white;">
+                                        Actions
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li><a class="dropdown-item" href="/trackers/{{tracker.tracker_id}}/edit">Edit</a></li>
+                                            <li><a class="dropdown-item" href="/trackers/{{tracker.tracker_id}}/delete">Delete</a></li>
+                                            <!--<li><a class="dropdown-item" href="">Something else here</a></li>-->
+                                        </ul>
+                                  </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <a href="/trackers/create" class="btn btn-outline-secondary" role="button" style="background-color: #104161; color: white;">
+                    + Create a tracker
+                </a>
+                
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/bootstrap.bundle.js"></script>
+</body>
+</html>

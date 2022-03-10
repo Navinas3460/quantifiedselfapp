@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/bootstrap.css" />
+  <link rel="stylesheet" href="/css/bootstrap-grid.css" />
+  <title>Home</title>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #104161;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Quantified Self App</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active" aria-current="page" href="/user/{{username}}/home">Home</a>
+          <a class="nav-link" href="/user/{{username}}/trackers">Trackers</a>
+          <a class="nav-link" href="/user/{{username}}/logs">Logs</a>
+        </div>
+      </div>
+      <a class="btn btn-danger" role="button" href="/user/logout" >Logout</a>
+    </div>
+  </nav>
+
+  <div class="container-fluid" style="padding: 30px;">
+    <div class="row">
+      <h1 class="display-3">Hello, {{username}}</h1>
+    </div>
+    <div class="row" style="padding: 10px;">
+      <div class="col-md justify-content-center" style="border: 1px solid #10222E; border-radius: 5px; padding: 10px;">
+        {% if condition == True %}
+        <h5>Trackers</h5>
+        <div class="table-responsive">
+          <table class="table table-sm table-bordered table-striped align-middle">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col" style="min-width: 200px;">Tracker</th>
+                <th scope="col">Last Tracked</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for tracker in trackers %}
+                <tr>
+                  <td scope="row">{{loop.index}}</td>
+                  <td>
+                    <a href="tracker/{{tracker.tracker_id}}" class="btn" style="text-align: start;">{{tracker.tracker_name}}</a>
+                  </td>
+                  <td>{{logs[tracker.tracker_id]}}</td>
+                  <td>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                      <a href="/user/{{username}}/logs/{{tracker.tracker_id}}/add" style="border: 0px solid #10222E; background-color: #E6E6E6;" class="btn">➕Track</a>
+                      <a href="tracker/{{tracker.tracker_id}}" class="btn" style="border: 0px solid #10222E; background-color: #E6E6E6; border-collapse:collapse;">ℹ️ info</a>                 
+                    </div>
+                    <a href="/user/{{username}}/tracker/{{tracker.tracker_id}}/delete" style="border: 0px solid #10222E; background-color: #E6E6E6;" class="btn">❌Remove tracker from your profile</a>
+                    </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        No Trackers Added
+        {% endif %}
+        <a href="/user/{{username}}/trackers" class="btn btn-outline-secondary" role="button" style="background-color: #104161; color: white;">
+          + Add Trackers
+        </a>
+        
+      </div>
+    </div>
+    <div class="row" style="padding: 10px;">
+      <div class="col-md justify-content-center" style="border: 1px solid #10222E; border-radius: 5px; padding: 10px;">
+        <h5 style="text-align: left;">Logs</h5>
+        <div class="table-responsive">
+          <table class="table table-sm table-bordered table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tracker Name</th>
+                <th scope="col">Tracked On</th>
+                <th scope="col">Value</th>
+                <th scope="col">Note</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for l in log %}
+              <tr>
+                <td scope="row">{{loop.index}}</td>
+                <td>{{tracker.query.filter_by(tracker_id=l.tracker_id).first().tracker_name}}</td>
+                <td>{{l.timestamp}}</td>
+                <td>{{l.value}}</td>
+                <td>{{l.note}}</td>
+                <td>Actions</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/bootstrap.js"></script>
+  <script src="/js/bootstrap.bundle.js"></script>
+</body>
+</html>

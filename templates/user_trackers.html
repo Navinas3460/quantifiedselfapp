@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.css" />
+    <link rel="stylesheet" href="/css/bootstrap-grid.css" />
+    <title>{{username}} Trackers</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #104161;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Quantified Self App</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link" aria-current="page" href="/user/{{username}}/home">Home</a>
+              <a class="nav-link active" href="/user/{{username}}/trackers">Trackers</a>
+              <a class="nav-link" href="/user/{{username}}/logs">Logs</a>
+            </div>
+          </div>
+          <a class="btn btn-danger" role="button" href="/user/logout" >Logout</a>
+        </div>
+      </nav>
+
+      <div class="container-fluid" style="padding: 30px;">
+          <div class="row">
+            <h1 style="text-align: Left;" class="display-3">{{username}}'s Trackers</h1>
+          </div>
+          <div class="row" style="padding: 10px;">
+            <div class="col-md justify-content-center" style="border: 1px solid #10222E; border-radius: 5px; padding: 10px;">
+                {% if condition1 == True %}
+                <h5>Your Trackers</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm table-bordered align-middle">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col" style="min-width: 200px;">Tracker</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Value Type</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for a in trackers %}
+                            <tr>
+                                <td scope="row">{{loop.index}}</td>
+                                <td><a href="tracker/{{a.tracker_id}}" class="btn" style="text-align: right;">{{a.tracker_name}}</a></td>
+                                <td>{{a.tracker_desc}}</td>
+                                <td>{{a.tracker_type}}</td>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <a href="/user/{{username}}/logs/{{a.tracker_id}}/add" class="btn" style="border: 0px solid #10222E; background-color: #E6E6E6;">➕Track</a>
+                                        <a href="tracker/{{a.tracker_id}}" class="btn" style="border: 0px solid #10222E; background-color: #E6E6E6; border-collapse:collapse;">ℹ️ info</a>                 
+                                    </div>
+                                    <a href="/user/{{username}}/tracker/{{a.tracker_id}}/delete" class="btn" style="border: 0px solid #10222E; background-color: #E6E6E6;">❌Remove tracker from your profile</a>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                No Trackers Added
+                {% endif %}
+                
+            </div>
+          </div>
+          <div class="row" style="padding: 10px;">
+            <div class="col-md justify-content-center" style="border: 1px solid #10222E; border-radius: 5px; padding: 10px;">
+                {% if condition2 == True %}
+                <h5>Available Trackers</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Tracker</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Value Type</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for a in available_trackers %}
+                            <tr>
+                                <td>{{loop.index}}</td>
+                                <td>{{a.tracker_name}}</td>
+                                <td>{{a.tracker_desc}}</td>
+                                <td>{{a.tracker_type}}</td>
+                                <td><a href="/user/{{username}}/tracker/{{a.tracker_id}}/add">Add</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                    
+                    {% else %}
+                    No Trackers Available to Add
+                    {% endif %}
+
+                    <a href="/trackers" class="btn btn-outline-secondary" role="button" style="background-color: #104161; color: white;">
+                        Create/Edit/Delete Trackers
+                    </a>
+            </div>
+          </div>
+      </div>
+    
+
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/bootstrap.bundle.js"></script>
+</body>
+</html>

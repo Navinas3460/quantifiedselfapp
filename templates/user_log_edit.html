@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+
+    <title>Editing {{tracker.tracker_name}} Log</title>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #104161;">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">Quantified Self App</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                  <a class="nav-link" aria-current="page" href="/user/{{username}}/home">Home</a>
+                  <a class="nav-link" href="/user/{{username}}/trackers">Trackers</a>
+                  <a class="nav-link active" href="/user/{{username}}/logs">Logs</a>
+                </div>
+              </div>
+              <a class="btn btn-danger" role="button" href="/user/logout" >Logout</a>
+            </div>
+        </nav>
+    </header>
+    
+    
+
+    <div class="container-fluid" style="padding: 30px">
+        <h1 class="display-3">
+            Editing {{tracker.tracker_name}} Log
+        </h1>
+        <div class="row" style="padding: 10px;">
+            <div class="col-md justify-content-center" style="border: 1px solid #10222E; border-radius: 5px; padding: 10px;">
+                <form action="/user/{{username}}/logs/{{log.log_id}}/edit" class="form-group" method="post" id="log-form-post">
+                    <div class="row">
+                        {% if condition == True %}
+                        <div class="mb-3">
+                            <label for="logvalue" class="form-label">Value ({{tracker.tracker_type}})</label>
+                            <input type="text" class="form-control" id="logvalue" name="logvalue" style="border: 1px solid black;" value="{{log.value}}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="note" class="form-label">Note</label>
+                            <input type="text" class="form-control" id="note" name="note" value="{{log.note}}" autocomplete="off" style="border: 1px solid black;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="datetime" class="form-label">Timestamp</label>
+                            <input type="text" class="form-control" id="datetime" name="datetime" value="{{log.timestamp}}" autocomplete="off" style="border: 1px solid black;">
+                            <div class="form-text">Date and Time must be in the format (dd/mm/yyyy hh:mm AM or PM)</div>
+                        </div>
+                        {% else %}
+                        <div class="mb-3">
+                            <label for="logvalue" class="form-label">Choose One Value</label>
+                            <select class="form-select" aria-label="Default select example" id="logvalue" name="logvalue" style="border: 1px solid black;">
+                                <option value="{{log.value}}">{{log.value}}</option>
+                                {% for choice in choices %}
+                                
+                                <option value="{{choice}}">{{choice}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="note" class="form-label">Note</label>
+                            <input type="text" class="form-control" id="note" name="note" value="{{log.note}}" autocomplete="off" style="border: 1px solid black;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="datetime" class="form-label">Timestamp</label>
+                            <input type="text" class="form-control" id="datetime" name="datetime" autocomplete="off" style="border: 1px solid black;" value="{{log.timestamp}}">
+                            <div class="form-text">Date and Time must be in the format (dd/mm/yyyy hh:mm AM or PM)</div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <input type="submit" class="btn btn-outline-primary mb-3" value="Edit" style="background-color: #022F40; color: white;">
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/bootstrap.bundle.js"></script>
+</body>
+</html>

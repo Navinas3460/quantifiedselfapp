@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+
+    <title>Tracking {{tracker.tracker_name}}</title>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #104161;">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">Quantified Self App</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                  <a class="nav-link" aria-current="page" href="/user/{{username}}/home">Home</a>
+                  <a class="nav-link" href="/user/{{username}}/trackers">Trackers</a>
+                  <a class="nav-link active" href="/user/{{username}}/logs">Logs</a>
+                </div>
+              </div>
+              <a class="btn btn-danger" role="button" href="/user/logout" >Logout</a>
+            </div>
+        </nav>
+    </header>
+    
+    
+
+    <div class="container-fluid" style="padding: 30px">
+        <h1 class="display-3">
+            Tracking {{tracker.tracker_name}}
+        </h1>
+        <div class="row" style="padding: 10px;">
+            <div class="col-md justify-content-center" style="border: 1px solid #10222E; border-radius: 5px; padding: 10px;">
+                <form action="/user/{{username}}/logs/{{tracker.tracker_id}}/add" class="form-group" method="post" id="log-form-post">
+                    <div class="row">
+                        {% if condition %}
+                        <div class="mb-3">
+                            <label for="value" class="form-label">Value ({{tracker.tracker_type}})</label>
+                            <input type="text" class="form-control" id="value" name="value" style="border: 1px solid black;" required>
+                        </div>
+                        {% else %}
+                        <div class="mb-3">
+                            <label for="choices" class="form-label">Choose One Value</label>
+                            <select class="form-select" aria-label="Default select example" id="choices" name="value" style="border: 1px solid black;">
+                                {% for choice in choices %}
+                                <option value="{{choice}}">{{choice}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        {% endif %}
+                        <div class="mb-3">
+                            <label for="note" class="form-label">Note</label>
+                            <input type="text" class="form-control" id="note" name="note" style="border: 1px solid black;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="datetime" class="form-label">Timestamp</label>
+                            <input type="text" class="form-control" id="datetime" name="datetime" style="border: 1px solid black;" value="{{now}}">
+                            <div class="form-text">Date and Time must be in the format (dd/mm/yyyy hh:mm AM or PM)</div>
+                        </div>
+                    </div>
+                    <input type="submit" class="btn btn-outline-primary mb-3" value="Add" style="background-color: #022F40; color: white;">
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+</html>

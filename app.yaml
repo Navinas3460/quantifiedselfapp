@@ -1,0 +1,137 @@
+openapi: 3.0.0
+info:
+  title: "Quantified Self App"
+  version: 1.0.0
+  description: "An app to help track oneself. Also the final project for MAD1 course."
+servers:
+  - url: http://127.0.0.1:5000/
+paths:
+  /api/trackers/{tracker_id}:
+    description: End point to read, update and delete trackers with tracker_id = trackerID
+    get:
+      description: Operation to read Tracker resource.
+      parameters:
+        - in: path
+          name: tracker_id
+          required: true
+          schema:
+            type: integer
+            example: 201
+      responses:
+        '200':
+          description: Request Successful
+          content: 
+            application/json:
+              schema:
+                title: tracker object
+                type: object
+                properties:
+                  tracker_id:
+                    type: integer
+                    example: 201
+                  tracker_name:
+                    type: string
+                    example: My Mood
+                  tracker_type:
+                    type: string
+                    example: Multiple Choice
+                  tracker_description:
+                    type: string
+                    example: Tracker Description Example
+        '500':
+          description: Internal Server Error
+        '404':
+          description: Tracker Not Found
+    put:
+      description: Operation to update Tracker resource.
+      parameters:
+        - in: path
+          name: tracker_id
+          required: true
+          schema:
+            type: integer
+            example: 201
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tracker_name:
+                  type: string
+                  example: My Mood
+                tracker_description:
+                  type: string
+                  example: Tracker Description Example
+      responses:
+        '200':
+          description: Update Successful
+          content: 
+            application/json:
+              schema:
+                title: tracker object
+                type: object
+                properties:
+                  tracker_id:
+                    type: integer
+                    example: 201
+                  tracker_name:
+                    type: string
+                    example: My Mood
+                  tracker_type:
+                    type: string
+                    example: Multiple Choice
+                  tracker_description:
+                    type: string
+                    example: Tracker Description Example
+        '500':
+          description: Internal Server Error
+        '404':
+          description: Tracker Not Found
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+    delete:
+      description: Operation to delete the tracker resource
+      parameters:
+        - in: path
+          name: tracker_id
+          required: true
+          schema:
+            type: integer
+            example: 201
+      responses:
+        '200':
+          description: Successfully Deleted
+        '404':
+          description: Tracker not found
+        '500':
+          description: Intenal Server Error
+  /api/tracker:
+    description: End point to create tracker resource
+    post:
+      description: Operation to create the tracker resource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tracker_name:
+                  type: string
+                  example: My Mood
+                tracker_type:
+                  type: string
+                  example: Multiple Choice
+                tracker_description:
+                  type: string
+                  example: Tracker Description Example
+                  
