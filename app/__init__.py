@@ -1,8 +1,9 @@
 from string import ascii_lowercase, ascii_uppercase
-from flask import Flask, flash, render_template, request, redirect, url_for
+from flask import Flask, flash, render_template, request, redirect, url_for, send_from_directory
 from flask_bcrypt import Bcrypt
 from models import *
 from datetime import datetime
+from os import path
 
 app = Flask(__name__, template_folder="../templates", static_url_path='', static_folder="../static")
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../quantifiedselfapp.sqlite3'

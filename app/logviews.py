@@ -4,7 +4,7 @@ from app import *
 @login_required
 def user_logs(username):
     user = Users_Model.query.filter_by(username=username).one()
-    logs = Logs_Model.query.filter_by(user_id=user.user_id).order_by(Logs_Model.tracker_id).all()
+    logs = Logs_Model.query.filter_by(user_id=user.user_id).all()
     tracker = Trackers_Model()
     return render_template("user_logs.html", user=user, logs=logs, tracker=tracker, username=username)
 

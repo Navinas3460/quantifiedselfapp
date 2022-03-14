@@ -1,4 +1,10 @@
+
 from app import *
+import numpy as np
+import io
+from flask import Response
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.figure import Figure
 
 
 
@@ -80,7 +86,7 @@ def user_home(username):
         tracker = Trackers_Model.query.filter_by(tracker_id=e.tracker_id).one()
         trackers.append(tracker)
         if log:
-            logs[e.tracker_id] = log.timestamp
+            logs[e.tracker_id] = log.timestamp,log.value
         else:
             logs[e.tracker_id] = None
         
@@ -88,7 +94,12 @@ def user_home(username):
     if trackers:
         condition = True
     tracker = Trackers_Model()
-    log = Logs_Model.query.filter_by(user_id=user_id).order_by(Logs_Model.log_id.desc()).all()
+    loge = Logs_Model.query.filter_by(user_id=user_id).order_by(Logs_Model.log_id.desc()).all()
+    i = 1
+    log = []
+    while i <= 3:
+        log.append(loge[i])
+        i += 1
     
     return render_template("user_home.html", username=username, trackers=trackers, condition=condition, logs=logs, tracker=tracker, log=log )
 
@@ -131,6 +142,37 @@ def user_tracker_del(username, tracker_id):
     except:
         db.session.rollback()
         raise
+
+@app.route("/user/<username>/tracker/<int:tracker_id>")
+@login_required
+def user_tracker_info(username, tracker_id):
+    tracker = Trackers_Model.query.filter_by(tracker_id=tracker_id).first()
+    condition = False
+    if tracker.tracker_type == "Numerical":
+        condition = True
+
+    return render_template("user_tracker_info.html", username=username, tracker=tracker, condition=condition)
+
+@app.route("/plot_png/<int:tracker_id>")
+@login_required
+def plot_png(tracker_id):
+    logs = Logs_Model.query.filter_by(tracker_id=tracker_id, user_id=current_user.user_id).all()
+    timestamps = []
+    values = []
+    for log in logs:
+        timestamps.append(log.timestamp)
+        values.append(log.value)
+    timestamps = np.array(timestamps)
+    values = np.array(values)
+    
+    fig = Figure()
+    axis = fig.add_subplot(1, 1, 1)
+    axis.plot(timestamps, values)
+    
+
+    output = io.BytesIO()
+    FigureCanvas(fig).print_png(output)
+    return Response(output.getvalue(), mimetype='image/png')
 
 @app.route("/user/<username>/tracker/<int:tracker_id>/add")
 @login_required

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/bootstrap.css" />
     <link rel="stylesheet" href="/css/bootstrap-grid.css" />
+    <link rel="stylesheet" href="/css/styles.css">
     <title>{{user.username}} Logs</title>
 </head>
 <body>
@@ -29,7 +30,7 @@
     <div class="container-fluid" style="padding: 30px;">
         <h1 class="display-3">{{user.username}}'s Logs</h1>
         <div class="row" style="padding: 10px;">
-          <div class="col-md justify-content-center" style="border: 1px solid #10222E; border-radius: 5px; padding: 10px;">
+          <div class="col-md justify-content-center" id="my-col">
             <div class="table-responsive">
               <table class="table table-sm table-bordered table-striped align-middle" style="min-height: 175px;">
                 <thead>
@@ -39,7 +40,7 @@
                     <th scope="col">Tracked On</th>
                     <th scope="col">Value</th>
                     <th scope="col">Note</th>
-                    <th scope="col"></th>
+                    <th scope="col">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -51,16 +52,11 @@
                     <td>{{log.value}}</td>
                     <td>{{log.note}}</td>
                     <td>
-                      <div class="dropdown">
-                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #104161; color: white;">
-                        Actions
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li><a class="dropdown-item" href="/user/{{username}}/logs/{{log.log_id}}/add">Add Log</a></li>
-                            <li><a class="dropdown-item" href="/user/{{username}}/logs/{{log.log_id}}/edit">Edit Log</a></li>
-                            <li><a class="dropdown-item" href="/user/{{username}}/logs/{{log.log_id}}/delete">Delete Log</a></li>
-                        </ul>
+                      <div class="btn-group" role="group" aria-label="Basic example">
+                        <a href="/user/{{username}}/logs/{{log.tracker_id}}/add" style="border: 0.5px solid #10222E; background-color: #18A999; color: white;" class="btn">➕New Log</a>
+                        <a href="/user/{{username}}/logs/{{log.log_id}}/edit" class="btn" style="border: 0.5px solid #10222E; background-color: #18A999; border-collapse:collapse; color: white;">📋Edit Log</a>                 
                       </div>
+                      <a href="/user/{{username}}/logs/{{log.log_id}}/delete" style="border: 0.5px solid #10222E; background-color: #18A999; color: white;" class="btn">❌Delete Log</a>
                     </td>
                   </tr>
                   {% endfor %}

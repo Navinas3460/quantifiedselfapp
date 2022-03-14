@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/bootstrap.css" />
     <link rel="stylesheet" href="/css/bootstrap-grid.css" />
+    <link rel="stylesheet" href="/css/styles.css">
     <title>{{username}} Trackers</title>
 </head>
 <body>
@@ -26,12 +27,20 @@
         </div>
       </nav>
 
+    
       <div class="container-fluid" style="padding: 30px;">
-          <div class="row">
-            <h1 style="text-align: Left;" class="display-3">{{username}}'s Trackers</h1>
+          <div class="row justify-content-between">
+              <div class="col-10">
+                <h1 style="text-align: Left;" class="display-3">{{username}}'s Trackers</h1>
+              </div>
+              <div class="col-sm align-self-center">
+                <a href="/trackers" class="btn btn-outline-secondary" role="button" style="background-color: #104161; color: white;">
+                    Create/Edit/Delete Trackers
+                </a>
+              </div>
           </div>
           <div class="row" style="padding: 10px;">
-            <div class="col-md justify-content-center" style="border: 1px solid #10222E; border-radius: 5px; padding: 10px;">
+            <div class="col-md justify-content-center" id="my-col">
                 {% if condition1 == True %}
                 <h5>Your Trackers</h5>
                 <div class="table-responsive">
@@ -54,10 +63,10 @@
                                 <td>{{a.tracker_type}}</td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <a href="/user/{{username}}/logs/{{a.tracker_id}}/add" class="btn" style="border: 0px solid #10222E; background-color: #E6E6E6;">➕Track</a>
-                                        <a href="tracker/{{a.tracker_id}}" class="btn" style="border: 0px solid #10222E; background-color: #E6E6E6; border-collapse:collapse;">ℹ️ info</a>                 
+                                        <a href="/user/{{username}}/logs/{{a.tracker_id}}/add" class="btn" style="border: 0.5px solid #10222E; background-color: #18A999; color: white;">➕Track</a>
+                                        <a href="tracker/{{a.tracker_id}}" class="btn" style="border: 0.5px solid #10222E; background-color: #18A999; border-collapse:collapse; color: white;">ℹ️ info</a>                 
                                     </div>
-                                    <a href="/user/{{username}}/tracker/{{a.tracker_id}}/delete" class="btn" style="border: 0px solid #10222E; background-color: #E6E6E6;">❌Remove tracker from your profile</a>
+                                    <a href="/user/{{username}}/tracker/{{a.tracker_id}}/delete" class="btn" style="border: 0.5px solid #10222E; background-color: #18A999; color: white;">❌Remove tracker from your profile</a>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -70,7 +79,7 @@
             </div>
           </div>
           <div class="row" style="padding: 10px;">
-            <div class="col-md justify-content-center" style="border: 1px solid #10222E; border-radius: 5px; padding: 10px;">
+            <div class="col-md justify-content-center" id="my-col">
                 {% if condition2 == True %}
                 <h5>Available Trackers</h5>
                 <div class="table-responsive">
@@ -91,7 +100,7 @@
                                 <td>{{a.tracker_name}}</td>
                                 <td>{{a.tracker_desc}}</td>
                                 <td>{{a.tracker_type}}</td>
-                                <td><a href="/user/{{username}}/tracker/{{a.tracker_id}}/add">Add</a></td>
+                                <td><a href="/user/{{username}}/tracker/{{a.tracker_id}}/add" class="btn" style="border: 0.5px solid #10222E; background-color: #18A999; color: white;">➕ Add it to your profile</a></td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -102,9 +111,7 @@
                     No Trackers Available to Add
                     {% endif %}
 
-                    <a href="/trackers" class="btn btn-outline-secondary" role="button" style="background-color: #104161; color: white;">
-                        Create/Edit/Delete Trackers
-                    </a>
+                    
             </div>
           </div>
       </div>
