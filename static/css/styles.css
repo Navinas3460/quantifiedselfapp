@@ -3,3 +3,10 @@
     border-radius: 5px;
     padding: 10px;
 }
+
+#my-button {
+    border: 0.5px solid #10222E;
+    background-color: #18A999;
+    color: white;
+    text-align: center;
+}

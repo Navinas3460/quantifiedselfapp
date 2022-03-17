@@ -6,7 +6,7 @@ info:
 servers:
   - url: http://127.0.0.1:5000/
 paths:
-  /api/trackers/{tracker_id}:
+  /trackers/{tracker_id}:
     description: End point to read, update and delete trackers with tracker_id = trackerID
     get:
       description: Operation to read Tracker resource.
@@ -115,7 +115,7 @@ paths:
           description: Tracker not found
         '500':
           description: Intenal Server Error
-  /api/tracker:
+  /trackers:
     description: End point to create tracker resource
     post:
       description: Operation to create the tracker resource

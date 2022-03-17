@@ -33,16 +33,19 @@
       <div class="col-10">
         <h1 class="display-3">Hello, {{username}}</h1>
       </div>
-      <div class="col-sm align-self-center">
-        <a href="/user/{{username}}/trackers" class="btn btn-outline-secondary" role="button" style="background-color: #104161; color: white;">
-          + Add Trackers
-        </a>
-      </div>
     </div>
     <div class="row" style="padding: 10px;">
       <div class="col-md justify-content-center" id="my-col">
         {% if condition == True %}
-        <h5>Trackers</h5>
+        <div class="row justify-content-between">
+          <div class="col-3">
+            <h5>Trackers</h5>
+          </div>
+          <div class="col-auto">
+            <a href="/user/{{username}}/trackers" id="my-button" class="btn" style="align-items: flex-end;">+ Add Trackers To Your Profile </a>
+          </div>
+        </div>
+        
         <div class="table-responsive">
           <table class="table table-sm table-bordered table-striped align-middle">
             <thead>
@@ -65,10 +68,10 @@
                   <td>{{logs[tracker.tracker_id][1]}}</td>
                   <td>
                     <div class="btn-group" role="group" aria-label="Basic example">
-                      <a href="/user/{{username}}/logs/{{tracker.tracker_id}}/add" style="border: 0.5px solid #10222E; background-color: #18A999; color: white;" class="btn">➕Track</a>
+                      <a href="/user/{{username}}/logs/{{tracker.tracker_id}}/add" id="my-button" class="btn">➕Track</a>
                       <a href="tracker/{{tracker.tracker_id}}" class="btn" style="border: 0.5px solid #10222E; background-color: #18A999; border-collapse:collapse; color: white;">ℹ️ info</a>                 
                     </div>
-                    <a href="/user/{{username}}/tracker/{{tracker.tracker_id}}/delete" style="border: 0.5px solid #10222E; background-color: #18A999; color: white;" class="btn">❌Remove tracker from your profile</a>
+                    <a href="/user/{{username}}/tracker/{{tracker.tracker_id}}/delete" id="my-button" class="btn">❌Remove tracker from your profile</a>
                     </td>
                 </tr>
               {% endfor %}
@@ -84,6 +87,7 @@
     <div class="row" style="padding: 10px;">
       <div class="col-md justify-content-center" id="my-col">
         <h5 style="text-align: left;">Logs (Three last tracked)</h5>
+        {% if condition2 %}
         <div class="table-responsive">
           <table class="table table-sm table-bordered table-striped">
             <thead>
@@ -116,6 +120,9 @@
             </tbody>
           </table>
         </div>
+        {% else %}
+        Not tracking yet
+        {% endif %}
       </div>
     </div>
   </div>

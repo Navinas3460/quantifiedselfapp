@@ -38,6 +38,9 @@
             <div class="col-md justify-content-center" style="border: 1px solid #10222E; border-radius: 5px; padding: 10px;">
                 <form action="/user/{{username}}/logs/{{tracker.tracker_id}}/add" class="form-group" method="post" id="log-form-post">
                     <div class="row">
+                        {% if error %}
+                        <p class="error" style="color: red;"><strong>Error:</strong>{{error}}</p>
+                        {% endif %}
                         {% if condition %}
                         <div class="mb-3">
                             <label for="value" class="form-label">Value ({{tracker.tracker_type}})</label>

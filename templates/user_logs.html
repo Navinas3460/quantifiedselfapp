@@ -31,6 +31,7 @@
         <h1 class="display-3">{{user.username}}'s Logs</h1>
         <div class="row" style="padding: 10px;">
           <div class="col-md justify-content-center" id="my-col">
+            {% if condition %}
             <div class="table-responsive">
               <table class="table table-sm table-bordered table-striped align-middle" style="min-height: 175px;">
                 <thead>
@@ -47,7 +48,7 @@
                   {% for log in logs %}
                   <tr>
                     <td scope="row">{{loop.index}}</td>
-                    <td>{{tracker.query.filter_by(tracker_id=log.tracker_id).first().tracker_name}}</td>
+                    <td><a href="/user/{{username}}/tracker/{{log.tracker_id}}" class="btn">{{tracker.query.filter_by(tracker_id=log.tracker_id).first().tracker_name}}</a></td>
                     <td>{{log.timestamp}}</td>
                     <td>{{log.value}}</td>
                     <td>{{log.note}}</td>
@@ -63,6 +64,9 @@
                 </tbody>
               </table>
             </div>
+            {% else %}
+            No trackings yet
+            {% endif %}
           </div>
         </div>
     </div>

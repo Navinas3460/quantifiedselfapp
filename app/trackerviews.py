@@ -1,11 +1,8 @@
 from app import *
 
 def valid_name(name):
-    if name:
-        if name[0] == " ":
-            return False
-        else:
-            return True
+    if name.isalnum():
+        return True
     else:
         return False
 
@@ -40,10 +37,11 @@ def tracker_edit(tracker_id):
                 return redirect("/trackers")
             except:
                 db.session.rollback()
-                return redirect("/trackers")
+                error = "<h1>Could not edit tracker. SERVER ERROR </h1>"
+                raise ServerError(500, "TRACKER001", error)
         else:
             error = "Invalid Name"
-            return render_template("tracker_edit.html", tracker=tracker, error=error, username=current_user.username)
+            raise InputError(400, "TRACKER002", html_page="tracker_edit.html", error_message=error, tracker=tracker, username=current_user.username)
 
 @app.route("/trackers/<int:tracker_id>/delete")
 def tracker_del(tracker_id):
@@ -57,7 +55,8 @@ def tracker_del(tracker_id):
         return redirect("/trackers")
     except:
         db.session.rollback()
-        return 'Something Wrong Happened', 500
+        error = "<h1>Something wrong happened. Server Error</h1>"
+        raise ServerError(500, "TRACKER003", error_message=error)
     
 @app.route("/trackers/create", methods=['GET', 'POST'])
 def tracker_create():
@@ -68,11 +67,12 @@ def tracker_create():
         new_tracker_name = request.form.get("trackerName")
         if not valid_name(new_tracker_name):
             error="Invalid name"
-            return render_template("tracker_create.html", error=error, username=current_user.username)
+            raise InputError(400, "TRACKER004", html_page="tracker_create.html", error_message=error, username=current_user.username)
         new_tracker_type = request.form.get("trackerType")
         if new_tracker_type not in tracker_types:
             error = 'Tracker Not Valid'
-            return render_template("tracker_create.html", error2=error, username=current_user.username)
+            raise InputError(400, "TRACKER005", error, html_page="tracker_create.html", username=current_user.username)
+        
         new_tracerk_desc = request.form.get("trackerDesc")
 
         new_tracker = Trackers_Model(tracker_name=new_tracker_name, tracker_type=new_tracker_type, tracker_desc=new_tracerk_desc)
@@ -86,7 +86,7 @@ def tracker_create():
         except:
             db.session.rollback()
             error = "Invalid Inputs"
-            return render_template("tracker_create.html", error=error, username=current_user.username)
+            raise InputError(400, "TRACKER006", error, "tracker_create.html", username=current_user.username)
 
 @app.route("/trackers/create/<int:tracker_id>/selectables", methods=['GET', 'POST'])
 def tracker_selectables(tracker_id):
@@ -112,4 +112,4 @@ def tracker_selectables(tracker_id):
             return redirect("/trackers")
         except:
             db.session.rollback()
-            raise
+            raise ServerError(500, "TRACKER007", "<h1>Server Error</h1>")

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/bootstrap.css" />
     <link rel="stylesheet" href="/css/bootstrap-grid.css" />
+    <link rel="stylesheet" href="/css/styles.css">
     <title>Tracker Dashboard</title>
 </head>
 <body>
@@ -26,10 +27,19 @@
         </div>
     </nav>
 
-    <div class="containe-sm" style="padding: 30px">
+    <div class="container-fluid" style="padding: 30px">
         <div class="row">
-            <h1 class="display-3">Trackers Editor</h1>
-            <div class="col-md justify-content-center" style="border: 1px solid #10222E; border-radius: 5px; padding: 10px;">
+            <div class="col-sm">
+                <h1 class="display-3">Trackers Editor</h1>
+            </div>
+            <div class="col-auto align-self-center">
+                <a href="/trackers/create" class="btn btn-outline-secondary" role="button" id="my-button">
+                    + Create a tracker
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md justify-content-center" id="my-col">
                 <div class="table-responsive">
                     <table class="table table-sm table-striped table-bordered">
                         <thead>
@@ -38,7 +48,7 @@
                                 <th scope="col">Tracker Name</th>
                                 <th scope="col">Tracker Type</th>
                                 <th scope="col">Tracker Description</th>
-                                <th scope="col"></th>
+                                <th scope="col">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -49,25 +59,15 @@
                                 <td>{{tracker.tracker_type}}</td>
                                 <td>{{tracker.tracker_desc}}</td>
                                 <td>
-                                    <div class="dropdown">
-                                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #104161; color: white;">
-                                        Actions
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <li><a class="dropdown-item" href="/trackers/{{tracker.tracker_id}}/edit">Edit</a></li>
-                                            <li><a class="dropdown-item" href="/trackers/{{tracker.tracker_id}}/delete">Delete</a></li>
-                                            <!--<li><a class="dropdown-item" href="">Something else here</a></li>-->
-                                        </ul>
-                                  </div>
+                                    <a href="/trackers/{{tracker.tracker_id}}/edit" class="btn" id="my-button">📋 Edit Tracker</a>
+                                    <a href="/trackers/{{tracker.tracker_id}}/delete" class="btn" id="my-button">❌ Delete Tracker</a>
                                 </td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
-                <a href="/trackers/create" class="btn btn-outline-secondary" role="button" style="background-color: #104161; color: white;">
-                    + Create a tracker
-                </a>
+                
                 
             </div>
         </div>

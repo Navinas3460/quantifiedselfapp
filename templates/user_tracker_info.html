@@ -28,21 +28,63 @@
     </nav>
 
     <div class="container-fluid" style="padding: 30px;">
-        <div class="row">
-            <h1 class="display-3">
-                {{username}}'s {{tracker.tracker_name}}'s info
-            </h1>
+        <div class="row justify-content-between">
+          <h1 class="display-3">
+            {{username}}'s {{tracker.tracker_name}}'s info
+          </h1>
+          <p class="lead"><strong>Tracker Type: {{tracker.tracker_type}}</strong></p>
+          {% if s %}
+          <p class="lead"><strong>Choices: </strong>{{s}}</p>
+          {% endif %}
+          <p class="lead"><strong>Description: {{tracker.tracker_desc}}</strong></p>
         </div>
-        {% if condition %}
-        <img src="/plot_png/{{tracker.tracker_id}}" alt="my plot">
-        {% endif %}
 
         <div class="row" style="padding: 10px;">
-            <div class="col-sm justify-content-center" id="my-col">
-                <table class="table">
-
-                </table>
+          {% if condition %}
+          <div class="col-sm justify-content-center">
+            <img src="/plot_png/{{tracker.tracker_id}}" alt="my plot" height="100%" width="100%" style="object-fit: contain;">
+          </div>
+          {% endif %}
+          <div class="col-sm justify-content-center" id="my-col">
+            <div class="row justify-content-between" style="padding-bottom: 10px;">
+              <div class="col-3">
+                <h5>Logs</h5>
+              </div>
+              <div class="col-auto">
+                <a href="/user/{{username}}/logs/{{tracker.tracker_id}}/add" style="border: 0.5px solid #10222E; background-color: #18A999; color: white; text-align: right;" class="btn">➕New Log</a>
+              </div>
             </div>
+              
+            <div class="table-responsive">
+              <table class="table table-sm table-bordered table-striped align-middle">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Tracked On</th>
+                    <th scope="col">Value</th>
+                    <th scope="col">Note</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for log in logs %}
+                  <tr>
+                    <td>{{loop.index}}</td>
+                    <td>{{log.timestamp}}</td>
+                    <td>{{log.value}}</td>
+                    <td>{{log.note}}</td>
+                    <td>
+                      <a href="/user/{{username}}/logs/{{log.log_id}}/edit" class="btn" id="my-button">📋Edit Log</a>                 
+                      <a href="/user/{{username}}/logs/{{log.log_id}}/delete"class="btn" id="my-button">❌Delete Log</a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+              
+              
+          </div>
         </div>
     </div>
 
