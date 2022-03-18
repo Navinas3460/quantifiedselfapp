@@ -37,6 +37,8 @@ def user_log_add(username, tracker_id):
             else:
                 error = "Boolean value is not allowed. Try 'true or false' or '1 or 0'"
                 raise InputError(400, "LOG002", error, "user_log_add.html", tracker=tracker, username=current_user.username, condition=True, now=now)
+        elif tracker.tracker_type == "Numerical" or tracker.tracker_type == "Time Duration":
+            value = float(value)
         if type(value) != tracker_types[tracker.tracker_type]:
             error = "Your value doesn't match the tracker type"
             if tracker.tracker_type == "Multiple Choice":
